@@ -1,31 +1,36 @@
 import os
 import telebot
-import logging
-from config import *
 from flask import Flask, request
+from config import *
 
 bot = telebot.TeleBot(BOT_TOKEN)
 server = Flask(__name__)
 
-logger = telebot.logger
-logger.setLevel(logging.DEBUG)
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    username = message.from_user.username
-    bot.reply_to(message, f"Hello, {username}")
+    bot.reply_to(message, 'Hello, ' + message.from_user.first_name)
 
-@server.route(f"/{BOT_TOKEN}", method=["POST"])
-def redirect_message():
-    json_string = request.get_data().decode("utf-8")
+
+@bot.message_handler(func=lambda message: True, content_types=['text'])
+def echo(message):
+    bot.reply_to(message, message.text)
+
+
+@server.route('/' + BOT_TOKEN, methods=['POST'])
+def get_message():
+    json_string = request.get_data().decode('utf-8')
     update = telebot.types.Update.de_json(json_string)
     bot.process_new_updates([update])
-    return "!", 200
+    return '!', 200
+
+
+@server.route('/')
+def webhook():
+    bot.remove_webhook()
+    bot.set_webhook(url=APP_URL)
+    return '!', 200
+
 
 if __name__ == '__main__':
-    bot.remove_webhook()
-    bot.set_webhook(url = APP_URL)
-    server.run(host='0.0.0.0',port=int(os.environ.get("PORT",5000)))
-
-
-
+    server.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
