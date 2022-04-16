@@ -14,36 +14,36 @@ server = Flask(__name__)
 def start(message):
     bot.reply_to(message, 'Assalomu alaykum, ' + message.from_user.first_name)
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    btn1 = types.KeyboardButton("👋 Поздороваться")
-    btn2 = types.KeyboardButton("❓ Задать вопрос")
+    btn1 = types.KeyboardButton("👋 Menu")
+    btn2 = types.KeyboardButton("❓ Haqida")
     markup.add(btn1, btn2)
-    bot.send_message(message.chat.id, text="Привет, {0.first_name}! Я тестовый бот для твоей статьи для habr.com".format(message.from_user), reply_markup=markup)
+    bot.send_message(message.chat.id, text="Salom, {0.first_name}! men menu botman! Quyidagi knopkalarni bosib men haqimda blib oling".format(message.from_user), reply_markup=markup)
 @bot.message_handler(content_types=['text'])
 def func(message):
-    if(message.text == "👋 Поздороваться"):
-        bot.send_message(message.chat.id, text="Привеет.. Спасибо что читаешь статью!)")
-    elif(message.text == "❓ Задать вопрос"):
+    if(message.text == "👋 Menu"):
+        bot.send_message(message.chat.id, text="Biz hozir test rejimida ishlayapmiz!)")
+    elif(message.text == "❓ Haqida"):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        btn1 = types.KeyboardButton("Как меня зовут?")
-        btn2 = types.KeyboardButton("Что я могу?")
-        back = types.KeyboardButton("Вернуться в главное меню")
+        btn1 = types.KeyboardButton("Bu qanday bot?")
+        btn2 = types.KeyboardButton("Menuni ko'rasizmi?")
+        back = types.KeyboardButton("Bosh menuga qaytish")
         markup.add(btn1, btn2, back)
-        bot.send_message(message.chat.id, text="Задай мне вопрос", reply_markup=markup)
+        bot.send_message(message.chat.id, text="Menga savollaringiz bormi", reply_markup=markup)
 
-    elif(message.text == "Как меня зовут?"):
-        bot.send_message(message.chat.id, "У меня нет имени..")
+    elif(message.text == "Bu qanday bot?"):
+        bot.send_message(message.chat.id, "Toshkent,Olmaliq sh")
 
-    elif message.text == "Что я могу?":
-        bot.send_message(message.chat.id, text="Поздороваться с читателями")
+    elif message.text == "Menuni ko'rasizmi?":
+        bot.send_message(message.chat.id, text="Sizga buyurtma berishda yordamlashaman")
 
-    elif (message.text == "Вернуться в главное меню"):
+    elif (message.text == "Bosh menuga qaytish"):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        button1 = types.KeyboardButton("👋 Поздороваться")
-        button2 = types.KeyboardButton("❓ Задать вопрос")
+        button1 = types.KeyboardButton("👋 Menu")
+        button2 = types.KeyboardButton("❓ Haqida")
         markup.add(button1, button2)
-        bot.send_message(message.chat.id, text="Вы вернулись в главное меню", reply_markup=markup)
+        bot.send_message(message.chat.id, text="Bosh sahifaga qaytdingiz", reply_markup=markup)
     else:
-        bot.send_message(message.chat.id, text="На такую комманду я не запрограммировал..")
+        bot.send_message(message.chat.id, text="Bu buyruqni bajara olmayman")
 
 #bot.polling(none_stop=True)
 
