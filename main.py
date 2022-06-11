@@ -5,12 +5,12 @@ import telebot
 from telebot import types
 from flask import Flask, request
 from config import *
-from libgen_api import LibgenSearch
+#from libgen_api import LibgenSearch
 
-s = LibgenSearch()
-results = s.search_author("Jane Austen")
-item_to_download = results[0]
-download_links = s.resolve_download_links(item_to_download)['GET']
+#s = LibgenSearch()
+#results = s.search_author("Jane Austen")
+#item_to_download = results[0]
+#download_links = s.resolve_download_links(item_to_download)['GET']
 #print(download_links)
 
 bot = telebot.TeleBot(BOT_TOKEN)
@@ -38,7 +38,7 @@ def func(message):
         bot.send_message(message.chat.id, text="Menga savollaringiz bormi", reply_markup=markup)
 
     elif(message.text == "Bu qanday bot?"):
-        bot.send_message(message.chat.id,download_links, "Toshkent,Olmaliq sh")
+        bot.send_message(message.chat.id, "Toshkent,Olmaliq sh")
 
     elif message.text == "Menuni ko'rasizmi?":
         bot.send_message(message.chat.id, text="Sizga buyurtma berishda yordamlashaman")
